@@ -110,7 +110,9 @@ class SeederMigrationCreator extends MigrationCreator
      */
     protected function getPath($name, $path): string
     {
-        return $path.DIRECTORY_SEPARATOR.$this->getDatePrefix().'_'.$this->getClassName($name).'.php';
+        $name = \Str::snake(trim($name));
+        //$this->getClassName($name)
+        return $path.DIRECTORY_SEPARATOR.$this->getDatePrefix().'_'.$name.'.php';
     }
 
     /**
