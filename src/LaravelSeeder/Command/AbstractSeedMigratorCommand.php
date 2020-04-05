@@ -3,6 +3,7 @@
 namespace Eighty8\LaravelSeeder\Command;
 
 use Eighty8\LaravelSeeder\Migration\SeederMigratorInterface;
+use Eighty8\LaravelSeeder\Migration\SeederMigrator;
 use Illuminate\Console\Command;
 
 abstract class AbstractSeedMigratorCommand extends Command
@@ -120,11 +121,22 @@ abstract class AbstractSeedMigratorCommand extends Command
 
         // Add the 'all' environment path to migration paths
         $allEnvPath = $pathFromConfig.DIRECTORY_SEPARATOR.self::ALL_ENVIRONMENTS;
+
         $this->addMigrationPath($allEnvPath);
 
         // Add the targeted environment path to migration paths
         $pathWithEnv = $pathFromConfig.DIRECTORY_SEPARATOR.$this->getEnvironment();
+
         $this->addMigrationPath($pathWithEnv);
+
+        $seedMigrator = app(SeederMigrator::class);
+
+        // Add paths defined on runtime (e.g in packages)
+        foreach($seedMigrator->paths() as $customPath)
+        {
+            $this->addMigrationPath($customPath.DIRECTORY_SEPARATOR.self::ALL_ENVIRONMENTS);
+            $this->addMigrationPath($customPath.DIRECTORY_SEPARATOR.$this->getEnvironment());
+        }
     }
 
     /**
