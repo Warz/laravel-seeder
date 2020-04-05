@@ -54,7 +54,7 @@ class SeederMigrationCreator extends MigrationCreator
      *
      * @return void
      */
-    protected function ensureMigrationDoesntAlreadyExist($name): void
+    protected function ensureMigrationDoesntAlreadyExist($name, $migrationPath = null): void
     {
         if (class_exists($className = $this->getClassName($name))) {
             throw new InvalidArgumentException("{$className} already exists.");
