@@ -180,12 +180,16 @@ class SeederMigrator extends Migrator implements SeederMigratorInterface
         foreach ($migrations as $migration) {
             $migration = (object) $migration;
 
-            $rolledBack[] = $files[$migration->seed];
+            // Only rollback does that are found in the path(s)
+            if(isset($files[$migration->seed]))
+            {
+                $rolledBack[] = $files[$migration->seed];
 
-            $this->runDown(
-                $files[$migration->seed],
-                $migration, Arr::get($options, 'pretend', false)
-            );
+                $this->runDown(
+                    $files[$migration->seed],
+                    $migration, Arr::get($options, 'pretend', false)
+                );
+            }
         }
 
         return $rolledBack;
@@ -227,5 +231,5 @@ class SeederMigrator extends Migrator implements SeederMigratorInterface
 
         $this->note("<info>Rolled back:</info>  {$name}");
     }
-    
+
 }
