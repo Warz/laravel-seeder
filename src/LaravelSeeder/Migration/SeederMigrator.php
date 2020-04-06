@@ -227,4 +227,5 @@ class SeederMigrator extends Migrator implements SeederMigratorInterface
 
         $this->note("<info>Rolled back:</info>  {$name}");
     }
+    
 }

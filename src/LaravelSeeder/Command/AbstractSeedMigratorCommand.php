@@ -184,7 +184,37 @@ abstract class AbstractSeedMigratorCommand extends Command
      */
     public function getMigrationPaths(): array
     {
+        // Here, we will check to see if a path option has been defined. If it has we will
+        // use the path relative to the root of the installation folder so our database
+        // migrations may be run for any customized path from within the application.
+        if ($this->input->hasOption('path') && $this->option('path')) {
+            // reset it
+            $this->setMigrationPaths([]);
+
+            $paths = collect($this->option('path'))->map(function ($path) {
+                return ! $this->usingRealPath()
+                    ? $this->laravel->basePath().'/'.$path
+                    : $path;
+            })->all();
+
+            foreach($paths as $path)
+            {
+                $this->addMigrationPath($path.DIRECTORY_SEPARATOR.self::ALL_ENVIRONMENTS);
+                $this->addMigrationPath($path.DIRECTORY_SEPARATOR.$this->getEnvironment());
+            }
+        }
+
         return $this->migrationPaths;
+    }
+
+    /**
+     * Determine if the given path(s) are pre-resolved "real" paths.
+     *
+     * @return bool
+     */
+    protected function usingRealPath()
+    {
+        return $this->input->hasOption('realpath') && $this->option('realpath');
     }
 
     /**

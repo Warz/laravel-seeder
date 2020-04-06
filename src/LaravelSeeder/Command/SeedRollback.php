@@ -54,6 +54,8 @@ class SeedRollback extends AbstractSeedMigratorCommand
             ['database', null, InputOption::VALUE_OPTIONAL, 'The database connection to use.'],
             ['force', null, InputOption::VALUE_NONE, 'Force the operation to run when in production.'],
             ['pretend', null, InputOption::VALUE_NONE, 'Dump the SQL queries that would be run.'],
+            ['path',null,InputOption::VALUE_OPTIONAL,'The path(s) to the migrations files to be executed'],
+            ['realpath',null,InputOption::VALUE_OPTIONAL,'Indicate any provided migration file paths are pre-resolved absolute paths'],
         ];
     }
 }
