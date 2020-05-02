@@ -117,6 +117,15 @@ abstract class AbstractSeedMigratorCommand extends Command
      */
     protected function resolveMigrationPaths(): void
     {
+        $seedMigrator = app(SeederMigrator::class);
+
+        // Add paths defined on runtime (e.g in packages)
+        foreach($seedMigrator->paths() as $customPath)
+        {
+            $this->addMigrationPath($customPath.DIRECTORY_SEPARATOR.self::ALL_ENVIRONMENTS);
+            $this->addMigrationPath($customPath.DIRECTORY_SEPARATOR.$this->getEnvironment());
+        }
+
         $pathFromConfig = database_path(config('seeders.dir'));
 
         // Add the 'all' environment path to migration paths
@@ -128,15 +137,6 @@ abstract class AbstractSeedMigratorCommand extends Command
         $pathWithEnv = $pathFromConfig.DIRECTORY_SEPARATOR.$this->getEnvironment();
 
         $this->addMigrationPath($pathWithEnv);
-
-        $seedMigrator = app(SeederMigrator::class);
-
-        // Add paths defined on runtime (e.g in packages)
-        foreach($seedMigrator->paths() as $customPath)
-        {
-            $this->addMigrationPath($customPath.DIRECTORY_SEPARATOR.self::ALL_ENVIRONMENTS);
-            $this->addMigrationPath($customPath.DIRECTORY_SEPARATOR.$this->getEnvironment());
-        }
     }
 
     /**
