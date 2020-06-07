@@ -1,5 +1,5 @@
 {
-  "name": "eighty8/laravel-seeder",
+  "name": "warz/laravel-seeder",
   "description": "Versioned, environment-based Seeders in Laravel",
   "keywords": [
     "data",
@@ -17,16 +17,16 @@
   "type": "library",
   "license": "MIT",
   "require": {
-    "php": ">=7.1.0",
-    "illuminate/support": "5.7.*|^6",
-    "illuminate/console": "5.7.*|^6",
-    "illuminate/database": "5.7.*|^6",
-    "illuminate/filesystem": "5.7.*|^6"
+    "php": ">=7.3.0",
+    "illuminate/support": "5.7.*|^7",
+    "illuminate/console": "5.7.*|^7",
+    "illuminate/database": "5.7.*|^7",
+    "illuminate/filesystem": "5.7.*|^7"
   },
   "require-dev": {
     "mockery/mockery": "^1.1",
     "orchestra/testbench": "^3.0",
-    "phpunit/phpunit": "^7.0"
+    "phpunit/phpunit": "^8.5"
   },
   "autoload": {
     "psr-4": {
